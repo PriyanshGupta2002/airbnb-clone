@@ -71,7 +71,8 @@ const Modal:React.FC<ModalProps> = ({
               
                 <div className='translate h-full lg:h-auto border-0 rounded-lg shadow-lg flex flex-col relative w-full bg-white outline-none focus:outline-none '>
                     <div className='flex items-center justify-center p-6 rounded-t relative border-b-[1px]'>
-                        <button 
+                        <button
+                         
                         className='p-1 border-0 hover:opacity-70 
                         transition
                         absolute
@@ -104,6 +105,7 @@ const Modal:React.FC<ModalProps> = ({
                             
                             />
                         </div>
+                            {footer && footer}
                     </div>
                 </div>
             </div>
