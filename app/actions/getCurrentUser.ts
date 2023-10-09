@@ -17,6 +17,7 @@ export const getCurrentUser=async()=>{
                 email:session.user.email as string
             }
         })
+
         if (!currentUser) {
             return null
         }

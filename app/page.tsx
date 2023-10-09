@@ -1,5 +1,30 @@
-export default function Home() {
+import primsa from "@/app/libs/prismadb";
+import Container from "./components/Container";
+import EmptyState from "./components/EmptyState";
+import { getListings } from "./actions/getListings";
+import ListingCard from "./components/listings/ListingCard";
+import { getCurrentUser } from "./actions/getCurrentUser";
+export default async function Home() {
+  const listingsData = getListings();
+  const currentUserData = getCurrentUser();
+  const [listings, currentUser] = await Promise.all([
+    listingsData,
+    currentUserData,
+  ]);
+  if (listings.length === 0) {
+    return <EmptyState showReset />;
+  }
   return (
-  <h1 className="text-3xl text-green-700">Hello</h1>
-  )
+    <Container>
+      <div className="pt-24 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 ">
+        {listings.map((listing) => (
+          <ListingCard
+            key={listing.id}
+            data={listing}
+            currentUser={currentUser}
+          />
+        ))}
+      </div>
+    </Container>
+  );
 }
