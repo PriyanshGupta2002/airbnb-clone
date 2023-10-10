@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { SafeListing, SafeUser } from "../types";
-import { Reservation } from "@prisma/client";
+import { SafeListing, SafeReservation, SafeUser } from "../types";
 import { categories } from "../components/navbar/Categories";
 import Container from "../components/Container";
 import ListingHead from "../components/listings/ListingHead";
@@ -27,7 +26,7 @@ interface ClientListingProps {
   listing: SafeListing & {
     user: SafeUser;
   };
-  reservations?: Reservation[];
+  reservations?: SafeReservation[];
 }
 const ClientListing: React.FC<ClientListingProps> = ({
   currentUser,
@@ -64,7 +63,7 @@ const ClientListing: React.FC<ClientListingProps> = ({
     }
     setIsLoading(true);
     try {
-      const { data } = await axios.post("/api/create-reservation", {
+      const { data } = await axios.post("/api/create-reservations", {
         totalPrice,
         startDate: dateRange.startDate,
         endDate: dateRange.endDate,
@@ -72,8 +71,7 @@ const ClientListing: React.FC<ClientListingProps> = ({
       });
       toast.success("Listing reserved");
       setDateRange(initialDateRange);
-      //redirect to trips
-      router.refresh();
+      router.push("/trips");
     } catch (error) {
       toast.error("Something went wrong!");
     } finally {

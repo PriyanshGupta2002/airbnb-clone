@@ -11,7 +11,7 @@ const page = async ({ params }: { params: IParams }) => {
     user: SafeUser;
   };
   const currentUser = await getCurrentUser();
-  const reservations = await getReservations({ listingId: listing.id });
+  const reservations = await getReservations(params);
   if (!listing) {
     return <EmptyState />;
   }
