@@ -1,20 +1,28 @@
-import client from "../libs/prismadb"
+import client from "../libs/prismadb";
+import { getCurrentUser } from "./getCurrentUser";
 
-export const getListings=async()=>{
-    try {
+export interface IListingParams {
+  userId?: string;
+}
+export const getListings = async (params: IListingParams) => {
+  try {
+    const { userId } = params;
+    let query: any = {};
+    if (userId) {
+      query.userId = userId;
+    }
     const lisitngs = await client.listing.findMany({
-        orderBy:{
-            createdAt:'desc'
-        }
-    })
-    const safeListings = lisitngs.map((listing)=>(
-        {
-            ...listing,
-            createdAt:listing.createdAt.toISOString()
-        }
-    ))
-    return safeListings
-} catch (error:any) {
-        throw new Error(error)
-}
-}
+      where: query,
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    const safeListings = lisitngs.map((listing) => ({
+      ...listing,
+      createdAt: listing.createdAt.toISOString(),
+    }));
+    return safeListings;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};

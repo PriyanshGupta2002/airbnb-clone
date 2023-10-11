@@ -41,6 +41,7 @@ const RegisterModal = () => {
       .then(({ data }) => {
         toast.success(data.message);
         registerModal.onClose();
+        loginModal.onOpen();
       })
       .catch((error) => {
         if (error.response.status === 409) {
