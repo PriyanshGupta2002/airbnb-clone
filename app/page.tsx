@@ -7,12 +7,8 @@ interface HomeProps {
   searchParams: IListingParams;
 }
 export default async function Home({ searchParams }: HomeProps) {
-  const listingsData = getListings(searchParams);
-  const currentUserData = getCurrentUser();
-  const [listings, currentUser] = await Promise.all([
-    listingsData,
-    currentUserData,
-  ]);
+  const listings = await getListings(searchParams);
+  const currentUser = await getCurrentUser();
   if (listings.length === 0) {
     return <EmptyState showReset />;
   }
