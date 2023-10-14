@@ -7,12 +7,12 @@ import { getListings } from "../actions/getListings";
 
 const page = async () => {
   const currentUser = await getCurrentUser();
-  const properties = await getListings({ userId: currentUser?.id });
+  const listings = await getListings({ userId: currentUser?.id });
 
   if (!currentUser) {
     return <EmptyState title="Unauthorized" subtitle="Please login" />;
   }
-  if (properties.length === 0) {
+  if (listings.length === 0) {
     return (
       <EmptyState
         title="No Properties Found"
@@ -20,7 +20,7 @@ const page = async () => {
       />
     );
   }
-  return <PropertiesClient properties={properties} currentUser={currentUser} />;
+  return <PropertiesClient listings={listings} currentUser={currentUser} />;
 };
 
 export default page;

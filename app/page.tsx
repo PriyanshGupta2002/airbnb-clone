@@ -1,11 +1,14 @@
 import primsa from "@/app/libs/prismadb";
 import Container from "./components/Container";
 import EmptyState from "./components/EmptyState";
-import { getListings } from "./actions/getListings";
+import { getListings, IListingParams } from "./actions/getListings";
 import ListingCard from "./components/listings/ListingCard";
 import { getCurrentUser } from "./actions/getCurrentUser";
-export default async function Home() {
-  const listingsData = getListings();
+interface HomeProps {
+  searchParams: IListingParams;
+}
+export default async function Home({ searchParams }: HomeProps) {
+  const listingsData = getListings(searchParams);
   const currentUserData = getCurrentUser();
   const [listings, currentUser] = await Promise.all([
     listingsData,
