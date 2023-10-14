@@ -10,6 +10,7 @@ import qs from "query-string";
 import { formatISO } from "date-fns";
 import Heading from "../Heading";
 import Calendar from "../Inputs/Calendar";
+import Counter from "../Inputs/Counter";
 enum Steps {
   LOCATION = 0,
   DATE = 1,
@@ -56,6 +57,7 @@ const SearchModal = () => {
       locationValue: location?.value,
       roomCount,
       bathroomCount,
+      guestCount,
     };
     if (dateRange.startDate) {
       updatedQuery.startDate = formatISO(dateRange.startDate);
@@ -127,7 +129,29 @@ const SearchModal = () => {
     );
   }
   if (step === Steps.INFO) {
-    bodyContent = <div>Info</div>;
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading title="More Information" subtitle="Find your perfect place" />
+        <Counter
+          title="Guests"
+          subtitle="How many guests are coming?"
+          onChange={(value: number) => setGuestCount(value)}
+          value={guestCount}
+        />
+        <Counter
+          title="Rooms"
+          subtitle="How many rooms do you want?"
+          onChange={(value: number) => setRoomCount(value)}
+          value={roomCount}
+        />
+        <Counter
+          title="Bathrooms"
+          subtitle="How many bathrooms do you want?"
+          onChange={(value: number) => setBathroomCount(value)}
+          value={bathroomCount}
+        />
+      </div>
+    );
   }
   return (
     <Modal
