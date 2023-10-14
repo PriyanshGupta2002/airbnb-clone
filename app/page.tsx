@@ -1,4 +1,3 @@
-import primsa from "@/app/libs/prismadb";
 import Container from "./components/Container";
 import EmptyState from "./components/EmptyState";
 import { getListings, IListingParams } from "./actions/getListings";
